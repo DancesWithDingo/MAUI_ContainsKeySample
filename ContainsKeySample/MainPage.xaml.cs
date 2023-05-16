@@ -1,4 +1,6 @@
-﻿namespace ContainsKeySample;
+﻿using System.Diagnostics;
+
+namespace ContainsKeySample;
 
 public partial class MainPage : ContentPage
 {
@@ -7,7 +9,16 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-	}
+
+        var dictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault();
+        if ( dictionary is not null ) {
+            Debug.WriteLine($"dict.ContainsKey(\"Primary\")   => {dictionary.ContainsKey("Primary")}");
+            Debug.WriteLine($"dict.Keys.Contains(\"Primary\") => {dictionary.Keys.Contains("Primary")}");
+
+            Debug.WriteLine("Keys in dictionary:");
+            dictionary.Keys.ToList().ForEach(k => Debug.WriteLine($"-> {k}"));
+        }
+    }
 
 	private void OnCounterClicked(object sender, EventArgs e)
 	{
